@@ -14,6 +14,8 @@
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h> // gethostname
+#include <boost/filesystem.hpp>
+#include <winsock.h>
 #else
 #include <unistd.h> // gethostname
 #endif
@@ -180,13 +182,13 @@ void performance_traces::
 void performance_traces::
         dump_entries(const vector<Entry>& entries, string sourcefilaname)
 {
-    // requires boost_filesystem
-    //boost::filesystem::create_directory("trace_perf");
-    //boost::filesystem::create_directory("trace_perf/dump");
-
-    // require posix
+#ifdef _MSC_VER// requires boost_filesystem
+    boost::filesystem::create_directory("trace_perf");
+    boost::filesystem::create_directory("trace_perf/dump");
+#else// require posix
     mkdir("trace_perf", S_IRWXU|S_IRGRP|S_IXGRP);
     mkdir("trace_perf/dump", S_IRWXU|S_IRGRP|S_IXGRP);
+#endif
 
     int i=0;
     string filename;

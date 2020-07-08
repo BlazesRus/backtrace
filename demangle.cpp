@@ -10,11 +10,11 @@ using namespace std;
 string demangle(const char* d) {
     int     status;
     char * a = abi::__cxa_demangle(d, 0, 0, &status);
-	if (a) {
-		string s(a);
+    if (a) {
+        string s(a);
         free(a);
-		return s;
-	}
+        return s;
+    }
     return string(d);
 }
 
@@ -22,21 +22,21 @@ string demangle(const char* d) {
 
 extern "C"
 char * __unDName(
-	char * outputString,
-	const char * name,
-	int maxStringLength,
-	void * (__cdecl * pAlloc )(size_t),
-	void (__cdecl * pFree )(void *),
-	unsigned short disableFlags);
+    char * outputString,
+    const char * name,
+    int maxStringLength,
+    void * (__cdecl * pAlloc )(size_t),
+    void (__cdecl * pFree )(void *),
+    unsigned short disableFlags);
 
 string demangle(const char* d) {
-	char * const pTmpUndName = __unDName(0, d, 0, malloc, free, 0x2800);
-	if (pTmpUndName)
-	{
-		string s(pTmpUndName);
-		free(pTmpUndName);
-		return s;
-	}
+    char * const pTmpUndName = __unDName(0, d, 0, malloc, free, 0x2800);
+    if (pTmpUndName)
+    {
+        string s(pTmpUndName);
+        free(pTmpUndName);
+        return s;
+    }
     return string(d);
 }
 
@@ -44,7 +44,7 @@ string demangle(const char* d) {
 
 // TODO find solution for this compiler
 std::string demangle(const char* d) {
-	return string(d);
+    return string(d);
 }
 
 std::string demangle(const char* d) {

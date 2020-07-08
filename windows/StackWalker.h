@@ -32,7 +32,7 @@ class StackWalker
 public:
   typedef enum StackWalkOptions
   {
-    // No addition info will be retrived 
+    // No addition info will be retrieved 
     // (only the address is available)
     RetrieveNone = 0,
     
@@ -48,7 +48,7 @@ public:
     // Also retrieve the version for the DLL/EXE
     RetrieveFileVersion = 8,
     
-    // Contains all the abouve
+    // Contains all the above
     RetrieveVerbose = 0xF,
     
     // Generate a "good" symbol-search-path
@@ -57,7 +57,7 @@ public:
     // Also use the public Microsoft-Symbol-Server
     SymUseSymSrv = 0x20,
     
-    // Contains all the abouve "Sym"-options
+    // Contains all the above "Sym"-options
     SymAll = 0x30,
     
     // Contains all options (default)
@@ -96,7 +96,7 @@ public:
 // in older compilers in order to use it... starting with VC7 we can declare it as "protected"
 protected:
 #endif
-	enum { STACKWALK_MAX_NAMELEN = 1024 }; // max name length for found symbols
+    enum { STACKWALK_MAX_NAMELEN = 1024 }; // max name length for found symbols
 
 protected:
   // Entry for each Callstack-Entry

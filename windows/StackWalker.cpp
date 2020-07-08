@@ -29,6 +29,7 @@
 #pragma comment(lib, "version.lib")  // for "VerQueryValue"
 
 #include "StackWalker.h"
+#include <VersionHelpers.h>
 
 
 // If VC7 and later, then use the shipped 'dbghelp.h'-file
@@ -1202,16 +1203,33 @@ void StackWalker::OnSymInit(LPCSTR szSearchPath, DWORD symOptions, LPCSTR szUser
     OnOutput(buffer);
   }
 #else
-  OSVERSIONINFOEXA ver;
-  ZeroMemory(&ver, sizeof(OSVERSIONINFOEXA));
-  ver.dwOSVersionInfoSize = sizeof(ver);
-  if (GetVersionExA( (OSVERSIONINFOA*) &ver) != FALSE)
+  //OSVERSIONINFOEXA ver;
+  //ZeroMemory(&ver, sizeof(OSVERSIONINFOEXA));
+  //ver.dwOSVersionInfoSize = sizeof(ver);
+  if(IsWindows10OrGreater()) //(GetVersionExA( (OSVERSIONINFOA*) &ver) != FALSE)
   {
-    _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "OS-Version: %d.%d.%d (%s) 0x%x-0x%x\n", 
-      ver.dwMajorVersion, ver.dwMinorVersion, ver.dwBuildNumber,
-      ver.szCSDVersion, ver.wSuiteMask, ver.wProductType);
-    OnOutput(buffer);
+    _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "Running at least Windows 10'\n");
+    //_snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "OS-Version: %d.%d.%d (%s) 0x%x-0x%x\n", 
+    //  ver.dwMajorVersion, ver.dwMinorVersion, ver.dwBuildNumber,
+    //  ver.szCSDVersion, ver.wSuiteMask, ver.wProductType);
   }
+  else if(IsWindows7OrGreater())
+  {
+      _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "Running at least Windows 7'\n");
+  }
+  else if (IsWindowsVistaOrGreater())
+  {
+      _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "Running at least Windows Vista'\n");
+  }
+  else if (IsWindows8OrGreater())
+  {
+      _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "Running at least Windows 8'\n");
+  }
+  else if(IsWindowsXPOrGreater())
+  {
+      _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "Running at least Windows XP'\n");
+  }
+  OnOutput(buffer);
 #endif
 }
 

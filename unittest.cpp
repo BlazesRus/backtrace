@@ -32,15 +32,15 @@ int UnitTest::
         test(bool rethrow_exceptions)
 {
     try {
-        Timer(); // Init performance counting
-        TaskTimer tt("Running tests");
+        //Timer(); // Init performance counting
+        //TaskTimer tt("Running tests");
 
         RUNTEST(Backtrace);
         RUNTEST(ExceptionAssert);
         RUNTEST(PrettifySegfault);
         RUNTEST(Timer);
         RUNTEST(shared_state_test);
-        RUNTEST(VerifyExecutionTime);
+        //RUNTEST(VerifyExecutionTime);
         RUNTEST(spinning_barrier);
         RUNTEST(locking_barrier);
         RUNTEST(shared_state_traits_backtrace);

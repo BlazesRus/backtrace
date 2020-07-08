@@ -3,7 +3,8 @@
 #include "exceptionassert.h"
 #include "trace_perf.h"
 #include "demangle.h"
-#include "tasktimer.h"
+//#include "tasktimer.h"
+#include <boost/timer/timer.hpp>
 #include "detectgdb.h"
 
 #include <future>
@@ -11,16 +12,21 @@
 using namespace std;
 
 std::function<void(double, double, void*, const std::type_info&)> shared_state_traits_backtrace::default_warning =
-        [](double T, double V, void*, const std::type_info& i)
+        [](boost::timer::auto_cpu_timer elapsedT, double V, void*, const std::type_info& i)
         {
             if (!DetectGdb::was_started_through_gdb ())
             {
+                boost::timer::auto_cpu_timer taskTimer;
                 auto bt = Backtrace::make ();
                 std::string tn = demangle(i);
+                taskTimer.stop();
+                std::string timerString = taskTimer.format();
 
-                std::async(std::launch::async, [T, V, tn, bt]{
-                    TaskInfo(boost::format("!!! Warning: Lock of %s was held for %s > %s. %s") %
-                             tn % TaskTimer::timeToString (T) % TaskTimer::timeToString (V) % bt.value ().to_string ());
+                
+                //std::async(std::launch::async, [T, V, tn, bt]{
+                //    TaskInfo(boost::format("!!! Warning: Lock of %s was held for %s > %s. %s") %
+                //             tn % TaskTimer::timeToString (T) % TaskTimer::timeToString (V) % bt.value ().to_string ());
+                //});
                 });
             }
         };

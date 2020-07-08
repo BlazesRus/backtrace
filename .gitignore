@@ -12,3 +12,9 @@ trace_perf/summary*/*
 Makefile
 *.a
 libbacktrace.h
+*.db
+*.db-shm
+*.opendb
+*.db-wal
+*.ipch
+$*.cpp.db

@@ -6,8 +6,6 @@
 #include <Windows.h>
 #endif
 
-using namespace std::chrono;
-
 Timer::Timer(bool start)
 {
     if (start)
